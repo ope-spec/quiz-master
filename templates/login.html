@@ -12,9 +12,10 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
 		integrity="sha384-oCEs6DzFjc1qO6zq3h9qwOQmRjUUG9F5PMJ1WEQZBJwF2P3V34ifw5SLI5KEJ6So" crossorigin="anonymous">
 
-	<link rel="stylesheet" href="../static/CSS/login.css">
-	<link rel="shortcut icon" href="../static/Images/favicon.png" type="image/x-icon">
-	<script src="../static/Javascript/login.js"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='CSS/login-button.css') }}">
+	<script src="{{ url_for('static', filename='Javascript/login.js') }}"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='Images/favicon.png') }}" type="image/x-icon">
+
 	<title>Quiz Master</title>
 </head>
 
@@ -23,7 +24,7 @@
 
 	<div class="container">
 
-		
+
 
 		<!--Data or Content-->
 		<div class="box-1">
