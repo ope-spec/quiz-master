@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Data Science Fundamentals</title>
+	<title>Cybersecurity</title>
 	<link rel="stylesheet" href="../static/CSS/dsnQuiz.css">
 	<link rel="shortcut icon" href="../static/Images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -15,9 +15,9 @@
 <body>
 	<div class="logo"><img src="../static/Images/logo.png" alt="" srcset=""></div>
 	<div class="quizhead">
-		<h1><b>Data Science Fundamentals</b></h1>
+		<h1><b>Cybersecurity</b></h1>
 	</div>
-	<form action="/dsnquiz" method="POST">
+	<form action="/csyquiz" method="POST">
 
         <div class="quiz-container">
             <p id="question">{{ question }}</p>
@@ -44,7 +44,7 @@
 
             const answer = selectedAnswer.value;
 
-            fetch(`/dsnquiz?answer=${answer}`, {
+            fetch(`/csyquiz?answer=${answer}`, {
                 method: 'GET'
             })
             .then(response => response.json())

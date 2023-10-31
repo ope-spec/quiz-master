@@ -31,6 +31,14 @@ body {
   padding-bottom: 90px;
 }
 
+.welcome{
+	color: white !important;
+}
+.welcome:hover{
+	background-color: none !important;
+
+}
+
 .heading_container {
   display: -webkit-box;
   display: -ms-flexbox;
