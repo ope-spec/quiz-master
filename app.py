@@ -115,7 +115,7 @@ def start_dsnquiz():
     if current_question_id <= total_questions:
         return render_template('dsnQuiz.html', question=question_data[1], options=question_data[2:6])
 
-    return jsonify({'message': 'No more questions found in the Data Science Fundamentals quiz'})
+    return redirect(url_for('result'))
 
 @app.route('/dsnquiz', methods=['POST'])
 def submit_dsnanswer():
@@ -123,12 +123,12 @@ def submit_dsnanswer():
     correct_option = fetch_question_from_database_dsn(get_current_question_id_dsn())[6]
 
     if user_answer == str(correct_option):
-        session['correct_answers_dsn'] = session.get('correct_answers_dsn', 0) + 1
+        session['correct_answers'] = session.get('correct_answers', 0) + 1
 
     session['current_question_id_dsn'] = get_current_question_id_dsn() + 1
 
     if get_current_question_id_dsn() > get_total_questions_dsn():
-        return jsonify({'message': 'Data Science Fundamentals quiz completed'})
+        return redirect(url_for('result'))
 
     return redirect(url_for('start_dsnquiz'))
 
@@ -162,7 +162,7 @@ def start_dmquiz():
     if current_question_id <= total_questions:
         return render_template('dmQuiz.html', question=question_data[1], options=question_data[2:6])
 
-    return jsonify({'message': 'No more questions found in the Data Science Fundamentals quiz'})
+    return redirect(url_for('result'))
 
 @app.route('/dmquiz', methods=['POST'])
 def submit_dmanswer():
@@ -170,12 +170,12 @@ def submit_dmanswer():
     correct_option = fetch_question_from_database_dm(get_current_question_id_dsn())[6]
 
     if user_answer == str(correct_option):
-        session['correct_answers_dm'] = session.get('correct_answers_dm', 0) + 1
+        session['correct_answers'] = session.get('correct_answers', 0) + 1
 
     session['current_question_id_dm'] = get_current_question_id_dm() + 1
 
     if get_current_question_id_dm() > get_total_questions_dm():
-        return jsonify({'message': 'Data Science Fundamentals quiz completed'})
+        return redirect(url_for('result'))
 
     return redirect(url_for('start_dmquiz'))
 
@@ -200,8 +200,8 @@ def fetch_question_from_database_cc(question_id):
     connection.close()
     return question_data
 
-@app.route('/cybersecurity', methods=['GET'])
-def start_cybersecurity():
+@app.route('/cloud-computing', methods=['GET'])
+def start_cloud_computing():
     current_question_id = get_current_question_id_cc()
     question_data = fetch_question_from_database_cc(current_question_id)
     total_questions = get_total_questions_cc()
@@ -209,22 +209,22 @@ def start_cybersecurity():
     if current_question_id <= total_questions:
         return render_template('ccQuiz.html', question=question_data[1], options=question_data[2:6])
 
-    return jsonify({'message': 'No more questions found in the Data Science Fundamentals quiz'})
+    return redirect(url_for('result'))
 
-@app.route('/cybersecurity', methods=['POST'])
+@app.route('/cloud-computing', methods=['POST'])
 def submit_ccanswer():
     user_answer = request.form.get('answer')
     correct_option = fetch_question_from_database_cc(get_current_question_id_dsn())[6]
 
     if user_answer == str(correct_option):
-        session['correct_answers_cc'] = session.get('correct_answers_cc', 0) + 1
+        session['correct_answers'] = session.get('correct_answers', 0) + 1
 
     session['current_question_id_cc'] = get_current_question_id_cc() + 1
 
     if get_current_question_id_cc() > get_total_questions_cc():
-        return jsonify({'message': 'Data Science Fundamentals quiz completed'})
+        return redirect(url_for('result'))
 
-    return redirect(url_for('start_cybersecurity'))
+    return redirect(url_for('start_cloud_computing'))
 
 
 # Web Development Quiz Session Variables
@@ -256,7 +256,7 @@ def start_wdquiz():
     if current_question_id <= total_questions:
         return render_template('wdQuiz.html', question=question_data[1], options=question_data[2:6])
 
-    return jsonify({'message': 'No more questions found in the Data Science Fundamentals quiz'})
+    return redirect(url_for('result'))
 
 @app.route('/wdquiz', methods=['POST'])
 def submit_wdanswer():
@@ -264,12 +264,12 @@ def submit_wdanswer():
     correct_option = fetch_question_from_database_wd(get_current_question_id_dsn())[6]
 
     if user_answer == str(correct_option):
-        session['correct_answers_wd'] = session.get('correct_answers_wd', 0) + 1
+        session['correct_answers'] = session.get('correct_answers', 0) + 1
 
     session['current_question_id_wd'] = get_current_question_id_wd() + 1
 
     if get_current_question_id_wd() > get_total_questions_wd():
-        return jsonify({'message': 'Data Science Fundamentals quiz completed'})
+        return redirect(url_for('result'))
 
     return redirect(url_for('start_wdquiz'))
 
@@ -303,7 +303,7 @@ def start_csyquiz():
     if current_question_id <= total_questions:
         return render_template('csyQuiz.html', question=question_data[1], options=question_data[2:6])
 
-    return jsonify({'message': 'No more questions found in the Data Science Fundamentals quiz'})
+    return redirect(url_for('result'))
 
 @app.route('/csyquiz', methods=['POST'])
 def submit_csyanswer():
@@ -311,12 +311,12 @@ def submit_csyanswer():
     correct_option = fetch_question_from_database_csy(get_current_question_id_dsn())[6]
 
     if user_answer == str(correct_option):
-        session['correct_answers_csy'] = session.get('correct_answers_csy', 0) + 1
+        session['correct_answers'] = session.get('correct_answers', 0) + 1
 
     session['current_question_id_csy'] = get_current_question_id_csy() + 1
 
     if get_current_question_id_csy() > get_total_questions_csy():
-        return jsonify({'message': 'Data Science Fundamentals quiz completed'})
+        return redirect(url_for('result'))
 
     return redirect(url_for('start_csyquiz'))
 
@@ -350,7 +350,7 @@ def start_pmquiz():
     if current_question_id <= total_questions:
         return render_template('pmQuiz.html', question=question_data[1], options=question_data[2:6])
 
-    return jsonify({'message': 'No more questions found in the Data Science Fundamentals quiz'})
+    return redirect(url_for('result'))
 
 @app.route('/pmquiz', methods=['POST'])
 def submit_pmanswer():
@@ -358,24 +358,30 @@ def submit_pmanswer():
     correct_option = fetch_question_from_database_pm(get_current_question_id_dsn())[6]
 
     if user_answer == str(correct_option):
-        session['correct_answers_pm'] = session.get('correct_answers_pm', 0) + 1
+        session['correct_answers'] = session.get('correct_answers', 0) + 1
 
     session['current_question_id_pm'] = get_current_question_id_pm() + 1
 
     if get_current_question_id_pm() > get_total_questions_pm():
-        return jsonify({'message': 'Data Science Fundamentals quiz completed'})
+        return redirect(url_for('result'))
 
     return redirect(url_for('start_pmquiz'))
 
 # Route to display quiz results
-@app.route('/quiz_results')
-def quiz_results():
+@app.route('/result', methods=['GET'])
+def result():
+    correct_answers = session.get('correct_answers')
     total_questions = 10
-    # Fetch the number of correct answers (you can modify this to keep track of correct answers)
-    correct_answers = session.get('correct_answers', 0)
-    # Calculate the user's score
-    score = (correct_answers / total_questions) * 100
-    return render_template('quiz_results.html', score=score)
+    score = (correct_answers / total_questions) * 100 if total_questions > 0 else 0
+
+    result_data = {
+        'total_questions': total_questions,
+        'correct_answers': correct_answers,
+        'incorrect_answers': total_questions - correct_answers,
+        'score': score
+    }
+
+    return render_template('result.html', result=result_data)
 
 
 if __name__ == '__main__':

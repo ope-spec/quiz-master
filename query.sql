@@ -22,7 +22,7 @@ select * from users;
 
 USE freedb_quizmaster;
 
-CREATE TABLE dsnquiz_questions (
+CREATE TABLE pmquiz_questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question_text TEXT NOT NULL,
     option1 TEXT NOT NULL,
@@ -32,4 +32,6 @@ CREATE TABLE dsnquiz_questions (
     correct_option INT NOT NULL
 );
 
+select * from dmquiz_questions;
 select * from dsnquiz_questions;
+select * from ccquiz_questions;
