@@ -1,41 +1,44 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from config import db_config
-from pymongo import MongoClient
+import mysql.connector
 
 csyquiz_bp = Blueprint('csyquiz', __name__)
 
+# Define session variables and route handlers for the Cloud Computing quiz here
 def get_current_question_id_csy():
     return session.get('current_question_id_csy', 1)
 
 def get_total_questions_csy():
-    client = MongoClient(db_config["uri"])
-    db = client[db_config["database"]]
-    total_questions = db["csyquiz_questions"].count_documents({})
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+    cursor.execute("SELECT COUNT(*) FROM csyquiz_questions")
+    total_questions = cursor.fetchone()[0]
+    connection.close()
     return total_questions
 
 def fetch_question_from_database_csy(question_id):
-    client = MongoClient(db_config["uri"])
-    db = client[db_config["database"]]
-    question_data = db["csyquiz_questions"].find_one({"id": question_id})
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM csyquiz_questions WHERE id = %s", (question_id,))
+    question_data = cursor.fetchone()
+    connection.close()
     return question_data
 
-@csyquiz_bp.route('/csyquiz', methods=['GET', 'POST'])
+@csyquiz_bp.route('/csyquiz', methods=['GET'])
 def start_csyquiz():
     current_question_id = get_current_question_id_csy()
     question_data = fetch_question_from_database_csy(current_question_id)
     total_questions = get_total_questions_csy()
 
     if current_question_id <= total_questions:
-        return render_template('csyquiz.html', question=question_data["question"], options=question_data["options"])
+        return render_template('csyQuiz.html', question=question_data[1], options=question_data[2:6])
 
     return redirect(url_for('result'))
 
-submit_csyanswer = Blueprint('submit_csyanswer', __name__)
-
-@submit_csyanswer.route('/csyquiz', methods=['POST'])
+@csyquiz_bp.route('/csyquiz', methods=['POST'])
 def submit_csyanswer():
     user_answer = request.form.get('answer')
-    correct_option = fetch_question_from_database_csy(get_current_question_id_csy())["correct_option"]
+    correct_option = fetch_question_from_database_csy(get_current_question_id_csy())[6]
 
     if user_answer == str(correct_option):
         session['correct_answers'] = session.get('correct_answers', 0) + 1

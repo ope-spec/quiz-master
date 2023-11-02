@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from config import db_config
-from pymongo import MongoClient
+import mysql.connector
 
 result_bp = Blueprint('result', __name__)
 

@@ -35,3 +35,8 @@ CREATE TABLE pmquiz_questions (
 select * from dmquiz_questions;
 select * from dsnquiz_questions;
 select * from ccquiz_questions;
+
+
+GRANT ALL PRIVILEGES ON quiz_master.* TO 'root'@'172.28.98.236';
+CREATE USER IF NOT EXISTS 'root'@'172.28.98.236' IDENTIFIED BY 'Ademidun98!';
+FLUSH PRIVILEGES;

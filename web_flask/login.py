@@ -1,30 +1,28 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from config import db_config
-from pymongo import MongoClient
-from werkzeug.security import check_password_hash
+import mysql.connector
 
 login_bp = Blueprint('login', __name__)
 
-# MongoDB connection
-client = MongoClient(db_config["uri"])
-db = client[db_config["database"]]
-users_collection = db["users"]
-
-# Define the login route
 @login_bp.route('/', methods=['GET', 'POST'])
-def login_route():
+def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-        # Find the user by email
-        user = users_collection.find_one({"email": email})
+        cursor.execute(
+            "SELECT * FROM users WHERE email = %s AND password = %s", (email, password))
+        user = cursor.fetchone()
 
-        if user and check_password_hash(user["password"], password):
-            session['username'] = user["username"]
+        if user:
+            session['username'] = user[1]
+            flash('Login successful', 'success')
+            connection.close()
             return redirect(url_for('index'))
         else:
             flash('Login failed. Please check your credentials.', 'danger')
-            print(f"MongoDB Query: Find user with email = {email}")
+        print(f"SQL Query: SELECT * FROM users WHERE email = {email} AND password = {password}")
 
     return render_template('login.html')
