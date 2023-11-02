@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Cybersecurity</title>
+	<title>Database Management Basics</title>
 	<link rel="stylesheet" href="../static/CSS/dsnQuiz.css">
 	<link rel="shortcut icon" href="../static/Images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -17,46 +17,50 @@
 	<div class="quizhead">
 		<h1><b>Cybersecurity</b></h1>
 	</div>
-	<form action="/csyquiz" method="POST">
+	<form action="/submit_csyanswer" method="POST">
 
-        <div class="quiz-container">
-            <p id="question">{{ question }}</p>
-            <input type="radio" name="answer" value="1" id="option1">
-            <label for="option1">{{ options[0] }}</label><br>
-            <input type="radio" name="answer" value="2" id="option2">
-            <label for="option2">{{ options[1] }}</label><br>
-            <input type="radio" name="answer" value="3" id="option3">
-            <label for="option3">{{ options[2] }}</label><br>
-            <input type="radio" name="answer" value="4" id="option4">
-            <label for="option4">{{ options[3] }}</label><br>
-            <button type="submit" class="movetonext" onclick="submitForm()">Submit</button>
-        </div>
+		<div class="quiz-container" id="quiz-content">
+			<p id="question">{{ question }}</p>
+			<input type="radio" name="answer" value="1" id="option1">
+			<label for="option1">{{ options[0] }}</label><br>
+			<input type="radio" name="answer" value="2" id="option2">
+			<label for="option2">{{ options[1] }}</label><br>
+			<input type="radio" name="answer" value="3" id="option3">
+			<label for="option3">{{ options[2] }}</label><br>
+			<input type="radio" name="answer" value="4" id="option4">
+			<label for="option4">{{ options[3] }}</label><br>
+			<button type="submit" class="movetonext" onclick="submitForm()">Submit</button>
+		</div>
 
-    </form>
+	</form>
 
-    <script>
-        function submitForm() {
-            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-            if (!selectedAnswer) {
-                alert('Please select an answer before submitting.');
-                return;
-            }
+	<script>
+		function submitForm() {
+			const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+			if (!selectedAnswer) {
+				alert('Please select an answer before submitting.');
+				return;
+			}
 
-            const answer = selectedAnswer.value;
+			const answer = selectedAnswer.value;
 
-            fetch(`/csyquiz?answer=${answer}`, {
-                method: 'GET'
-            })
-            .then(response => response.json())
-            .then(data => {
-                const quizContainer = document.querySelector('.quiz-container');
-                quizContainer.innerHTML = data.html;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
+			fetch(`/submit_csyanswer?answer=${answer}`, {
+				method: 'POST'
+			})
+				.then(response => response.json())
+				.then(data => {
+					// Check if the quiz is completed
+					if (data.question === 'Quiz completed') {
+						window.location.href = '/result';
+					} else {
+						window.location.href = '/csyquiz';
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		}
+	</script>
 
 </body>
 

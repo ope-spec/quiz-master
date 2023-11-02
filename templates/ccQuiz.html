@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Cloud Computing</title>
+	<title>Database Management Basics</title>
 	<link rel="stylesheet" href="../static/CSS/dsnQuiz.css">
 	<link rel="shortcut icon" href="../static/Images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -17,9 +17,9 @@
 	<div class="quizhead">
 		<h1><b>Cloud Computing</b></h1>
 	</div>
-	<form action="/cloud-computing" method="POST">
+	<form action="/submit_ccanswer" method="POST">
 
-		<div class="quiz-container">
+		<div class="quiz-container" id="quiz-content">
 			<p id="question">{{ question }}</p>
 			<input type="radio" name="answer" value="1" id="option1">
 			<label for="option1">{{ options[0] }}</label><br>
@@ -29,8 +29,7 @@
 			<label for="option3">{{ options[2] }}</label><br>
 			<input type="radio" name="answer" value="4" id="option4">
 			<label for="option4">{{ options[3] }}</label><br>
-			<button type="submit" class="movetonext" onclick="submitForm()" name="question_id"
-				value="{{ question_id + 1 }}">Submit</button>
+			<button type="submit" class="movetonext" onclick="submitForm()">Submit</button>
 		</div>
 
 	</form>
@@ -45,13 +44,17 @@
 
 			const answer = selectedAnswer.value;
 
-			fetch(`/cloud-computing?answer=${answer}`, {
-				method: 'GET'
+			fetch(`/submit_ccanswer?answer=${answer}`, {
+				method: 'POST'
 			})
 				.then(response => response.json())
 				.then(data => {
-					const quizContainer = document.querySelector('.quiz-container');
-					quizContainer.innerHTML = data.html;
+					// Check if the quiz is completed
+					if (data.question === 'Quiz completed') {
+						window.location.href = '/result'; // Redirect to the result page
+					} else {
+						window.location.href = '/ccquiz'; // Redirect to the next question
+					}
 				})
 				.catch(error => {
 					console.error('Error:', error);

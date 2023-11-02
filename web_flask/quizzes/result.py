@@ -7,7 +7,7 @@ result_bp = Blueprint('result', __name__)
 # Route to display quiz results
 @result_bp.route('/result', methods=['GET'])
 def result():
-    correct_answers = session.get('correct_answers')
+    correct_answers = session.get('correct_answers', 0)
     total_questions = 10
 
     score = (correct_answers / total_questions) * 100 if total_questions > 0 else 0

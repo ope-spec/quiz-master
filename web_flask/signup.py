@@ -23,11 +23,11 @@ def signup_route():
     if existing_user:
         # User with the provided email or username already exists
         flash('Email or username already exists. Please sign in instead.', 'danger')
-        return redirect(url_for('login'))
+        return redirect(url_for('login.login_route'))
     else:
         # Insert the new user into the 'users' table
         cursor.execute(
             "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", (username, email, password))
         connection.commit()
         flash('Signup successful. You can now log in.', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('login.login_route'))

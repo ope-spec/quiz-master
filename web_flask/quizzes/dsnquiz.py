@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 import mysql.connector
 from config import db_config
 
@@ -23,8 +23,9 @@ def fetch_question_from_database_dsn(question_id):
     connection.close()
     return question_data
 
-@dsnquiz_bp.route('/dsnquiz', methods=['GET', 'POST'])
+@dsnquiz_bp.route('/dsnquiz', methods=['GET'])
 def start_dsnquiz():
+    session['current_question_id_dsn'] = 1
     current_question_id = get_current_question_id_dsn()
     question_data = fetch_question_from_database_dsn(current_question_id)
     total_questions = get_total_questions_dsn()
@@ -32,15 +33,17 @@ def start_dsnquiz():
     if current_question_id <= total_questions:
         return render_template('dsnQuiz.html', question=question_data[1], options=question_data[2:6])
 
-    return redirect(url_for('result'))
+    return redirect(url_for('result.result'))
 
-
-submit_dsnanswer = Blueprint('submit_dsnanswer', __name__)
-
-@submit_dsnanswer.route('/dsnquiz', methods=['POST'])
+@dsnquiz_bp.route('/submit_dsnanswer', methods=['POST'])
 def submit_dsnanswer():
-    user_answer = request.form.get('answer')
+    user_answer = request.args.get('answer')
     correct_option = fetch_question_from_database_dsn(get_current_question_id_dsn())[6]
+    current_question_id = get_current_question_id_dsn()
+    correct_option = fetch_question_from_database_dsn(current_question_id)[6]
+
+    print(f'User Answer: {user_answer}')
+    print(f'Correct Option: {correct_option}')
 
     if user_answer == str(correct_option):
         session['correct_answers'] = session.get('correct_answers', 0) + 1
@@ -48,6 +51,8 @@ def submit_dsnanswer():
     session['current_question_id_dsn'] = get_current_question_id_dsn() + 1
 
     if get_current_question_id_dsn() > get_total_questions_dsn():
-        return redirect(url_for('result'))
+        return redirect(url_for('result.result'))
 
-    return redirect(url_for('start_dsnquiz'))
+    next_question_data = fetch_question_from_database_dsn(get_current_question_id_dsn())
+    return render_template('dsnQuiz.html', question=next_question_data[1], options=next_question_data[2:6])
+    #return jsonify({'question': next_question_data[1], 'options': next_question_data[2:6]})
