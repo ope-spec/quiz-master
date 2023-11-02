@@ -1,10 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from config import db_config
+from flask import Blueprint, render_template, request, redirect, url_for, session
 import mysql.connector
+from config import db_config
 
 pmquiz_bp = Blueprint('pmquiz', __name__)
 
-# Define session variables and route handlers for the Cloud Computing quiz here
 def get_current_question_id_pm():
     return session.get('current_question_id_pm', 1)
 
@@ -24,7 +23,7 @@ def fetch_question_from_database_pm(question_id):
     connection.close()
     return question_data
 
-@pmquiz_bp.route('/pmquiz', methods=['GET'])
+@pmquiz_bp.route('/pmquiz', methods=['GET', 'POST'])
 def start_pmquiz():
     current_question_id = get_current_question_id_pm()
     question_data = fetch_question_from_database_pm(current_question_id)
@@ -35,7 +34,10 @@ def start_pmquiz():
 
     return redirect(url_for('result'))
 
-@pmquiz_bp.route('/pmquiz', methods=['POST'])
+
+submit_pmanswer = Blueprint('submit_pmanswer', __name__)
+
+@submit_pmanswer.route('/pmquiz', methods=['POST'])
 def submit_pmanswer():
     user_answer = request.form.get('answer')
     correct_option = fetch_question_from_database_pm(get_current_question_id_pm())[6]

@@ -1,11 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from config import db_config
+from flask import Blueprint, request, redirect, url_for, flash
 import mysql.connector
+from config import db_config
 
 signup_bp = Blueprint('signup', __name__)
 
+# signup route
 @signup_bp.route('/signup', methods=['POST'])
-def signup():
+def signup_route():
     username = request.form.get('username')
     email = request.form.get('email')
     phone = request.form.get('phone')

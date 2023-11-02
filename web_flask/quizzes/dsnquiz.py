@@ -1,10 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from config import db_config
+from flask import Blueprint, render_template, request, redirect, url_for, session
 import mysql.connector
+from config import db_config
 
 dsnquiz_bp = Blueprint('dsnquiz', __name__)
 
-# Define session variables and route handlers for the Cloud Computing quiz here
 def get_current_question_id_dsn():
     return session.get('current_question_id_dsn', 1)
 
@@ -24,7 +23,7 @@ def fetch_question_from_database_dsn(question_id):
     connection.close()
     return question_data
 
-@dsnquiz_bp.route('/dsnquiz', methods=['GET'])
+@dsnquiz_bp.route('/dsnquiz', methods=['GET', 'POST'])
 def start_dsnquiz():
     current_question_id = get_current_question_id_dsn()
     question_data = fetch_question_from_database_dsn(current_question_id)
@@ -35,7 +34,10 @@ def start_dsnquiz():
 
     return redirect(url_for('result'))
 
-@dsnquiz_bp.route('/dsnquiz', methods=['POST'])
+
+submit_dsnanswer = Blueprint('submit_dsnanswer', __name__)
+
+@submit_dsnanswer.route('/dsnquiz', methods=['POST'])
 def submit_dsnanswer():
     user_answer = request.form.get('answer')
     correct_option = fetch_question_from_database_dsn(get_current_question_id_dsn())[6]

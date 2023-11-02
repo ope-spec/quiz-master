@@ -1,10 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from config import db_config
+from flask import Blueprint, render_template, request, redirect, url_for, session
 import mysql.connector
+from config import db_config
 
 wdquiz_bp = Blueprint('wdquiz', __name__)
 
-# Define session variables and route handlers for the Cloud Computing quiz here
 def get_current_question_id_wd():
     return session.get('current_question_id_wd', 1)
 
@@ -35,7 +34,10 @@ def start_wdquiz():
 
     return redirect(url_for('result'))
 
-@wdquiz_bp.route('/wdquiz', methods=['POST'])
+
+submit_wdanswer = Blueprint('submit_wdanswer', __name__)
+
+@submit_wdanswer.route('/wdquiz', methods=['POST'])
 def submit_wdanswer():
     user_answer = request.form.get('answer')
     correct_option = fetch_question_from_database_wd(get_current_question_id_wd())[6]
