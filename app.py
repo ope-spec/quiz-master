@@ -1,12 +1,19 @@
 from flask import Flask, redirect, url_for, render_template
-from config import SECRET_KEY
+from flask_pymongo import PyMongo
+from config import SECRET_KEY, db_config
 from web_flask.quizzes import dsnquiz_bp, dmquiz_bp, ccquiz_bp, wdquiz_bp, csyquiz_bp, pmquiz_bp, result_bp
 from web_flask.login import login_bp
 from web_flask.signup import signup_bp
+
+
 app = Flask(__name__)
 
 # Set the secret key
 app.secret_key = SECRET_KEY
+
+# Initialize the MongoDB connection
+app.config["MONGO_URI"] = db_config["uri"]
+mongo = PyMongo(app)
 
 # Register the blueprints for the quizzes
 app.register_blueprint(dsnquiz_bp)

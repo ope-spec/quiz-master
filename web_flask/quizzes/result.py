@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
-import mysql.connector
 from config import db_config
+from pymongo import MongoClient
 
 result_bp = Blueprint('result', __name__)
 
@@ -9,6 +9,7 @@ result_bp = Blueprint('result', __name__)
 def result():
     correct_answers = session.get('correct_answers')
     total_questions = 10
+
     score = (correct_answers / total_questions) * 100 if total_questions > 0 else 0
 
     result_data = {
@@ -19,4 +20,3 @@ def result():
     }
 
     return render_template('result.html', result=result_data)
-

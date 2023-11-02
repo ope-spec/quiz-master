@@ -17,7 +17,7 @@
 	<div class="quizhead">
 		<h1><b>Cybersecurity</b></h1>
 	</div>
-	<form action="/cybersecurity" method="POST">
+	<form action="/csyquiz" method="POST">
 
         <div class="quiz-container">
             <p id="question">{{ question }}</p>
@@ -44,7 +44,7 @@
 
             const answer = selectedAnswer.value;
 
-            fetch(`/cybersecurity?answer=${answer}`, {
+            fetch(`/csyquiz?answer=${answer}`, {
                 method: 'GET'
             })
             .then(response => response.json())
