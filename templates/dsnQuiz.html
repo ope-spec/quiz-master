@@ -17,7 +17,7 @@
 	<div class="quizhead">
 		<h1><b>Data Science Fundamentals </b></h1>
 	</div>
-	<form action="/submit_dsnanswer" method="POST">
+	<form action="{{ url_for('dsnquiz.submit_dsnanswer') }}" method="POST">
 
 		<div class="quiz-container" id="quiz-content">
 			<p id="question">{{ question }}</p>
@@ -43,15 +43,17 @@
 			}
 
 			const answer = selectedAnswer.value;
+			const quiz = "Data Science Fundamentals";
 
-			fetch(`/submit_dsnanswer?answer=${answer}`, {
+			fetch(`/submit_dsnanswer?answer=${answer}&quiz=${quiz}`, {
 				method: 'POST'
 			})
 				.then(response => response.json())
 				.then(data => {
 					// Check if the quiz is completed
 					if (data.question === 'Quiz completed') {
-						window.location.href = '/result'; // Redirect to the result page
+						// Redirect to the result page with the quiz parameter
+						window.location.href = `/result/${data.quiz}`;
 					} else {
 						window.location.href = '/dsnquiz'; // Redirect to the next question
 					}

@@ -5,3 +5,4 @@ from .wdquiz import wdquiz_bp
 from .csyquiz import csyquiz_bp
 from .pmquiz import pmquiz_bp
 from .result import result_bp
+from .result_history import result_history_bp

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quiz Result History</title>
+    <link rel="stylesheet" href="../static/CSS/result.css">
+    <link rel="shortcut icon" href="../static/Images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="result-container">
+        <h1>Quiz Result History</h1>
+        <div class="result-details">
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Practice Test</th>
+                    <th>Score</th>
+                </tr>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result[0] }}</td>
+                    <td>{{ result[2] }}</td>
+                    <td>{{ result[1] }}%</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <a href="{{ url_for('quiz_master') }}" class="navigateback">Back to Home</a>
+    </div>
+</body>
+
+</html>

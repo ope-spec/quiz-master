@@ -20,9 +20,9 @@ CREATE TABLE users (
 
 select * from users;
 
-USE freedb_quizmaster;
+USE quiz_master;
 
-CREATE TABLE pmquiz_questions (
+CREATE TABLE wdquiz_questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question_text TEXT NOT NULL,
     option1 TEXT NOT NULL,
@@ -32,11 +32,19 @@ CREATE TABLE pmquiz_questions (
     correct_option INT NOT NULL
 );
 
+CREATE DATABASE quiz_master;
+
 select * from dmquiz_questions;
 select * from dsnquiz_questions;
 select * from ccquiz_questions;
 
+CREATE TABLE quiz_results (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    score INT,
+    quiz_date DATETIME,
+    quiz_identifier VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(userid)
+);
 
-GRANT ALL PRIVILEGES ON quiz_master.* TO 'root'@'172.28.98.236';
-CREATE USER IF NOT EXISTS 'root'@'172.28.98.236' IDENTIFIED BY 'Ademidun98!';
-FLUSH PRIVILEGES;
+select * from quiz_results;

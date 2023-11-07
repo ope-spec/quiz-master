@@ -21,7 +21,8 @@
 			<p>Incorrect Answers: <span>{{ result['incorrect_answers'] }}</span></p>
 			<p>Your Score: <span>{{ result['score'] }}%</span></p>
 		</div>
-		<a href="{{ url_for('index') }}" class="navigateback">Back to Home</a>
+		<a href="{{ url_for('quiz_master') }}" class="navigateback">Back to Home</a>
+		<a href="{{ url_for('result_history.result_history', user_id=user_id) }}" class="navigateback">See Result History</a>
 	</div>
 </body>
 </html>
