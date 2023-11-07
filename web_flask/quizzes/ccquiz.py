@@ -25,6 +25,7 @@ def fetch_question_from_database_cc(question_id):
 
 @ccquiz_bp.route('/ccquiz', methods=['GET'])
 def start_ccquiz():
+    session['correct_answers'] = 0
     session['current_question_id_cc'] = 1
     current_question_id = get_current_question_id_cc()
     question_data = fetch_question_from_database_cc(current_question_id)
@@ -37,19 +38,20 @@ def start_ccquiz():
 
 @ccquiz_bp.route('/submit_ccanswer', methods=['POST'])
 def submit_ccanswer():
-    user_answer = request.args.get('answer')
+    session['correct_answers'] = session.get('correct_answers', 0)
+    user_answer = request.form.get('answer')
     current_question_id = get_current_question_id_cc()
     question_data = fetch_question_from_database_cc(current_question_id)
-    correct_option_index = question_data[6] - 1
+    correct_option_index = question_data[6]
     options = question_data[2:6]
-    correct_option = options[correct_option_index]
+    correct_option = options[correct_option_index - 1]
 
     print(f'User Answer: {user_answer}')
     print(f'Correct Option Index: {correct_option_index}')
-    print(f'Correct Option: {correct_option}')
 
-    if user_answer == str(correct_option_index + 1):
-        session['correct_answers'] = session.get('correct_answers', 0) + 1
+    if user_answer is not None and user_answer == str(correct_option_index):
+             session['correct_answers'] += 1
+             print(f'Count of correct answers so far: {session["correct_answers"]}')
 
     session['current_question_id_cc'] = current_question_id + 1  # Increment question ID
 

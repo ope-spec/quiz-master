@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, Response, redirect, url_for, render_template
 from config import SECRET_KEY
 from web_flask.quizzes import dsnquiz_bp, dmquiz_bp, ccquiz_bp, wdquiz_bp, csyquiz_bp, pmquiz_bp, result_bp
 from web_flask.quizzes import result_history_bp
@@ -28,6 +28,12 @@ app.register_blueprint(login_bp)
 app.register_blueprint(signup_bp)
 app.register_blueprint(result_history_bp)
 
+
+@app.route('/no-cache-page')
+def no_cache_page():
+    response = Response("This page should not be cached", status=200)
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    return response
 
 @app.route('/')
 def root():
