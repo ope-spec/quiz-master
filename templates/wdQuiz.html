@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Database Management Basics</title>
+	<title>Web Development</title>
 	<link rel="stylesheet" href="../static/CSS/dsnQuiz.css">
 	<link rel="shortcut icon" href="../static/Images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -15,9 +15,9 @@
 <body>
 	<div class="logo"><img src="../static/Images/logo.png" alt="" srcset=""></div>
 	<div class="quizhead">
-		<h1><b>Web Development</b></h1>
+		<h1><b>Web Development </b></h1>
 	</div>
-	<form action="/submit_wdanswer" method="POST">
+	<form action="{{ url_for('wdquiz.submit_wdanswer') }}" method="POST">
 
 		<div class="quiz-container" id="quiz-content">
 			<p id="question">{{ question }}</p>
@@ -43,17 +43,19 @@
 			}
 
 			const answer = selectedAnswer.value;
+			const quiz = "Web Development";
 
-			fetch(`/submit_wdanswer?answer=${answer}`, {
+			fetch(`/submit_wdanswer?answer=${answer}&quiz=${quiz}`, {
 				method: 'POST'
 			})
 				.then(response => response.json())
 				.then(data => {
 					// Check if the quiz is completed
 					if (data.question === 'Quiz completed') {
-						window.location.href = '/result';
+						// Redirect to the result page with the quiz parameter
+						window.location.href = `/result/${data.quiz}`;
 					} else {
-						window.location.href = '/wdquiz';
+						window.location.href = '/wdquiz'; // Redirect to the next question
 					}
 				})
 				.catch(error => {

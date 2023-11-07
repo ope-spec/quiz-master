@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Database Management Basics</title>
+	<title>Cloud Computing</title>
 	<link rel="stylesheet" href="../static/CSS/dsnQuiz.css">
 	<link rel="shortcut icon" href="../static/Images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -15,9 +15,9 @@
 <body>
 	<div class="logo"><img src="../static/Images/logo.png" alt="" srcset=""></div>
 	<div class="quizhead">
-		<h1><b>Cloud Computing</b></h1>
+		<h1><b>Cloud Computing </b></h1>
 	</div>
-	<form action="/submit_ccanswer" method="POST">
+	<form action="{{ url_for('ccquiz.submit_ccanswer') }}" method="POST">
 
 		<div class="quiz-container" id="quiz-content">
 			<p id="question">{{ question }}</p>
@@ -43,15 +43,17 @@
 			}
 
 			const answer = selectedAnswer.value;
+			const quiz = "Cloud Computing";
 
-			fetch(`/submit_ccanswer?answer=${answer}`, {
+			fetch(`/submit_ccanswer?answer=${answer}&quiz=${quiz}`, {
 				method: 'POST'
 			})
 				.then(response => response.json())
 				.then(data => {
 					// Check if the quiz is completed
 					if (data.question === 'Quiz completed') {
-						window.location.href = '/result'; // Redirect to the result page
+						// Redirect to the result page with the quiz parameter
+						window.location.href = `/result/${data.quiz}`;
 					} else {
 						window.location.href = '/ccquiz'; // Redirect to the next question
 					}

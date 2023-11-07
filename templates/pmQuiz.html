@@ -15,9 +15,9 @@
 <body>
 	<div class="logo"><img src="../static/Images/logo.png" alt="" srcset=""></div>
 	<div class="quizhead">
-		<h1><b>Database Management Basics</b></h1>
+		<h1><b>Project Management </b></h1>
 	</div>
-	<form action="/submit_pmanswer" method="POST">
+	<form action="{{ url_for('pmquiz.submit_pmanswer') }}" method="POST">
 
 		<div class="quiz-container" id="quiz-content">
 			<p id="question">{{ question }}</p>
@@ -43,17 +43,19 @@
 			}
 
 			const answer = selectedAnswer.value;
+			const quiz = "Project Management";
 
-			fetch(`/submit_pmanswer?answer=${answer}`, {
+			fetch(`/submit_pmanswer?answer=${answer}&quiz=${quiz}`, {
 				method: 'POST'
 			})
 				.then(response => response.json())
 				.then(data => {
 					// Check if the quiz is completed
 					if (data.question === 'Quiz completed') {
-						window.location.href = '/result'; // Redirect to the result page
+						// Redirect to the result page with the quiz parameter
+						window.location.href = `/result/${data.quiz}`;
 					} else {
-						window.location.href = '/dmquiz'; // Redirect to the next question
+						window.location.href = '/pmquiz'; // Redirect to the next question
 					}
 				})
 				.catch(error => {

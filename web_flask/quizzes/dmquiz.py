@@ -33,26 +33,28 @@ def start_dmquiz():
     if current_question_id <= total_questions:
         return render_template('dmQuiz.html', question=question_data[1], options=question_data[2:6])
 
-    return redirect(url_for('result.result'))
+    return redirect(url_for('result.result', quiz='Database Management Basics'))
 
 @dmquiz_bp.route('/submit_dmanswer', methods=['POST'])
 def submit_dmanswer():
     user_answer = request.args.get('answer')
-    correct_option = fetch_question_from_database_dm(get_current_question_id_dm())[6]
     current_question_id = get_current_question_id_dm()
-    correct_option = fetch_question_from_database_dm(current_question_id)[6]
+    question_data = fetch_question_from_database_dm(current_question_id)
+    correct_option_index = question_data[6] - 1  # Adjust for 0-based indexing
+    options = question_data[2:6]
+    correct_option = options[correct_option_index]
 
     print(f'User Answer: {user_answer}')
     print(f'Correct Option: {correct_option}')
 
-    if user_answer == str(correct_option):
+    if user_answer == str(correct_option_index + 1):  # Compare user's answer to the correct option index
         session['correct_answers'] = session.get('correct_answers', 0) + 1
 
     session['current_question_id_dm'] = get_current_question_id_dm() + 1
 
-    if get_current_question_id_dm() > get_total_questions_dm():
-        return redirect(url_for('result.result'))
+    total_questions = get_total_questions_dm()
+    if get_current_question_id_dm() > total_questions:
+        return redirect(url_for('result.result', quiz='Database Management Basics'))
 
     next_question_data = fetch_question_from_database_dm(get_current_question_id_dm())
     return render_template('dmQuiz.html', question=next_question_data[1], options=next_question_data[2:6])
-    #return jsonify({'question': next_question_data[1], 'options': next_question_data[2:6]})

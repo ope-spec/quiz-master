@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Database Management Basics</title>
 	<link rel="stylesheet" href="../static/CSS/dsnQuiz.css">
-	<link rel="stylesheet" href="../static/CSS/result.css">
 	<link rel="shortcut icon" href="../static/Images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
@@ -16,9 +15,9 @@
 <body>
 	<div class="logo"><img src="../static/Images/logo.png" alt="" srcset=""></div>
 	<div class="quizhead">
-		<h1><b>Database Management Basics</b></h1>
+		<h1><b>Database Management Basics </b></h1>
 	</div>
-	<form action="/submit_dmanswer" method="POST">
+	<form action="{{ url_for('dmquiz.submit_dmanswer') }}" method="POST">
 
 		<div class="quiz-container" id="quiz-content">
 			<p id="question">{{ question }}</p>
@@ -44,15 +43,17 @@
 			}
 
 			const answer = selectedAnswer.value;
+			const quiz = "Database Management Basics";
 
-			fetch(`/submit_dmanswer?answer=${answer}`, {
+			fetch(`/submit_dmanswer?answer=${answer}&quiz=${quiz}`, {
 				method: 'POST'
 			})
 				.then(response => response.json())
 				.then(data => {
 					// Check if the quiz is completed
 					if (data.question === 'Quiz completed') {
-						window.location.href = '/result'; // Redirect to the result page
+						// Redirect to the result page with the quiz parameter
+						window.location.href = `/result/${data.quiz}`;
 					} else {
 						window.location.href = '/dmquiz'; // Redirect to the next question
 					}
