@@ -11,7 +11,7 @@ def result(quiz):
     correct_answers = session.get('correct_answers', 0)
     total_questions = 10
     incorrect_answers = total_questions - correct_answers if total_questions > correct_answers else 0
-    score = int((correct_answers / total_questions) * 100)
+    score = (correct_answers / total_questions) * 100
 
     result_data = {
         'total_questions': total_questions,
@@ -32,7 +32,7 @@ def result(quiz):
             timestamp = now.strftime('%Y-%m-%d %H:%M:%S')
 
             insert_query = "INSERT INTO quiz_results (user_id, score, quiz_date, quiz_identifier) VALUES (%s, %s, %s, %s)"
-            cursor.execute(insert_query, (user_id, int(score), timestamp, quiz))
+            cursor.execute(insert_query, (user_id, score, timestamp, quiz))
             connection.commit()
         except Exception as e:
             connection.rollback()

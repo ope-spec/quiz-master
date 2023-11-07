@@ -40,20 +40,21 @@ def submit_wdanswer():
     user_answer = request.args.get('answer')
     current_question_id = get_current_question_id_wd()
     question_data = fetch_question_from_database_wd(current_question_id)
-    correct_option_index = question_data[6] - 1  # Adjust for 0-based indexing
+    correct_option_index = question_data[6] - 1
     options = question_data[2:6]
     correct_option = options[correct_option_index]
 
     print(f'User Answer: {user_answer}')
+    print(f'Correct Option Index: {correct_option_index}')
     print(f'Correct Option: {correct_option}')
 
-    if user_answer == str(correct_option_index + 1):  # Compare user's answer to the correct option index
+    if user_answer == str(correct_option_index + 1):
         session['correct_answers'] = session.get('correct_answers', 0) + 1
 
-    session['current_question_id_wd'] = get_current_question_id_wd() + 1
+    session['current_question_id_wd'] = current_question_id + 1  # Increment question ID
 
     total_questions = get_total_questions_wd()
-    if get_current_question_id_wd() > total_questions:
+    if current_question_id >= total_questions:  # Check if all questions have been answered
         return redirect(url_for('result.result', quiz='Web Development'))
 
     next_question_data = fetch_question_from_database_wd(get_current_question_id_wd())
