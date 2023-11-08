@@ -22,7 +22,7 @@ mock==5.1.0
 mysql_connector_repackaged==0.3.1
 PasteScript==3.3.0
 Pillow==9.5.0
-protobuf==4.25.0
+protobuf==4.24.4
 pyOpenSSL==23.3.0
 pytest==7.4.3
 railroad==0.5.0
