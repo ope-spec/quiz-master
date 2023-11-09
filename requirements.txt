@@ -9,7 +9,7 @@ Jinja2==3.1.2
 lxml==4.9.3
 mysql_connector_repackaged==0.3.1
 numpy==1.21.6
-Pillow==10.1.0
+Pillow==9.5.0
 protobuf==4.25.0
 pyOpenSSL==23.3.0
 simplejson==3.19.2
