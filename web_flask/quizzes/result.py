@@ -1,11 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from config import db_config
+from flask import Blueprint, render_template, request, session
 import mysql.connector
+from config import db_config
 from datetime import datetime
 
 result_bp = Blueprint('result', __name__)
 
-# Dynamic route to display quiz results for different quizzes
 @result_bp.route('/result/<quiz>', methods=['GET'])
 def result(quiz):
     correct_answers = session.get('correct_answers', 0)
@@ -41,4 +40,15 @@ def result(quiz):
         finally:
             connection.close()
 
-    return render_template('result.html', result=result_data, user_id=user_id, quiz=quiz)
+    # Render result_history.html regardless of the result of the quiz
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+    query = "SELECT qr.quiz_date, qr.score, qr.quiz_identifier " \
+            "FROM quiz_results qr " \
+            "WHERE qr.user_id = %s " \
+            "ORDER BY qr.quiz_date DESC"
+    cursor.execute(query, (user_id,))
+    results = cursor.fetchall()
+    connection.close()
+
+    return render_template('result_history.html', results=results, user_id=user_id)
