@@ -8,7 +8,7 @@ from flask_login import LoginManager
 from web_flask.user import User
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
