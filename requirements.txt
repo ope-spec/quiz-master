@@ -1,9 +1,6 @@
-attr==0.3.2
 brotlicffi==1.1.0.0
-ConfigParser==6.0.0
 cryptography==41.0.5
 Cython==3.0.5
-docutils==0.20.1
 Flask==3.0.0
 flask_login==0.6.3
 ipython==8.17.2
