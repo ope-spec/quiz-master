@@ -29,6 +29,5 @@ Sphinx==7.2.6
 toml==0.10.2
 tornado==6.3.3
 urllib3_secure_extra==0.1.0
-xmlrpclib==1.0.1
 zipp==3.17.0
 zstandard==0.22.0
