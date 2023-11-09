@@ -16,4 +16,4 @@ simplejson==3.19.2
 toml==0.10.2
 tornado==6.2
 urllib3_secure_extra==0.1.0
-zstandard==0.22.0
+zstandard==0.21.0
