@@ -37,11 +37,11 @@ def no_cache_page():
 
 @app.route('/')
 def root():
-    return redirect(url_for('quiz_master_index'))
+    return redirect(url_for('index'))
 
-@app.route('/quiz-master-index')
-def quiz_master_index():
-    return render_template('quiz-master-index.html')
+@app.route('/index')
+def index():
+    return render_template('index.html')
 
 @app.route('/quiz-master')
 def quiz_master():
@@ -49,9 +49,7 @@ def quiz_master():
 
 @login_manager.user_loader
 def load_user(user_id):
-    # Load the user from the database based on the user_id
-    # Replace this with the actual code to load the user
-    return User.query.get(int(user_id))  # Example assuming a User model
+    return User.query.get(int(user_id))
 
 
 
