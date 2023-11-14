@@ -2,6 +2,7 @@ import mysql.connector
 from config import db_config
 from datetime import datetime
 
+
 def update_result_in_db(user_id, correct_answers, total_questions, quiz):
     connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()

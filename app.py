@@ -1,6 +1,8 @@
 from flask import Flask, Response, redirect, url_for, render_template
 from config import SECRET_KEY
-from web_flask.quizzes import dsnquiz_bp, dmquiz_bp, ccquiz_bp, wdquiz_bp, csyquiz_bp, pmquiz_bp, result_bp
+from web_flask.quizzes import dsnquiz_bp, dmquiz_bp
+from web_flask.quizzes import ccquiz_bp, wdquiz_bp
+from web_flask.quizzes import csyquiz_bp, pmquiz_bp, result_bp
 from web_flask.quizzes import result_history_bp
 from web_flask.login import login_bp
 from web_flask.signup import signup_bp
@@ -35,22 +37,25 @@ def no_cache_page():
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     return response
 
+
 @app.route('/')
 def root():
     return redirect(url_for('index'))
+
 
 @app.route('/index')
 def index():
     return render_template('index.html')
 
+
 @app.route('/quiz-master')
 def quiz_master():
     return render_template('quiz-master.html')
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
 
 
 if __name__ == '__main__':

@@ -2,7 +2,9 @@ from flask import Blueprint, request, redirect, url_for, flash
 import mysql.connector
 from config import db_config
 
+
 signup_bp = Blueprint('signup', __name__)
+
 
 # signup route
 @signup_bp.route('/signup', methods=['POST'])
@@ -17,7 +19,8 @@ def signup_route():
     cursor = connection.cursor()
 
     # Check if the email or username already exists
-    cursor.execute("SELECT * FROM users WHERE email = %s OR username = %s", (email, username))
+    cursor.execute("SELECT * FROM users WHERE email = %s OR username = %s",
+                   (email, username))
     existing_user = cursor.fetchone()
 
     if existing_user:
@@ -27,7 +30,8 @@ def signup_route():
     else:
         # Insert the new user into the 'users' table
         cursor.execute(
-            "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", (username, email, password))
+            "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
+            (username, email, password))
         connection.commit()
         flash('Signup successful. You can now log in.', 'success')
         return redirect(url_for('login.login_route'))

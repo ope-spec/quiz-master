@@ -3,7 +3,9 @@ import mysql.connector
 from config import db_config
 from datetime import datetime
 
+
 result_bp = Blueprint('result', __name__)
+
 
 @result_bp.route('/result/<quiz>', methods=['GET'])
 def result(quiz):
@@ -51,4 +53,6 @@ def result(quiz):
     results = cursor.fetchall()
     connection.close()
 
-    return render_template('result_history.html', results=results, user_id=user_id)
+    return render_template('result_history.html',
+                           results=results,
+                           user_id=user_id)

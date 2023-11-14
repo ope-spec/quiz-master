@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request
+from flask import redirect, url_for, flash, session
 import mysql.connector
 from config import db_config
 
 login_bp = Blueprint('login', __name__)
+
 
 # Define the login route
 @login_bp.route('/login', methods=['GET', 'POST'])
@@ -14,7 +16,8 @@ def login_route():
         cursor = connection.cursor()
 
         cursor.execute(
-            "SELECT * FROM users WHERE email = %s AND password = %s", (email, password))
+            "SELECT * FROM users WHERE email = %s AND password = %s",
+            (email, password))
         user = cursor.fetchone()
 
         if user:
@@ -25,6 +28,7 @@ def login_route():
 
         else:
             flash('Login failed. Please check your credentials.', 'danger')
-        print(f"SQL Query: SELECT * FROM users WHERE email = {email} AND password = {password}")
+        print(f"SQL Query: SELECT * FROM users "
+              f"WHERE email = {email} AND password = {password}")
 
     return render_template('login.html')

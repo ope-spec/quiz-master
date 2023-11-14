@@ -11,4 +11,3 @@ db_config = {
 
 # Generate a secret key (you can use Flask's built-in 'secrets' module)
 SECRET_KEY = "your-secret-key"
-

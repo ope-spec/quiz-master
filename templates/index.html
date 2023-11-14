@@ -120,14 +120,19 @@
 	<section class="about_section layout_padding" id="about">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6 px-0">
+				<div class="col-md-8 px-0">
 					<div class="img_container">
 						<div class="img-box">
-							<img src="../static/Images/About.png" alt="" />
+							<div class="video-box">
+								<video controls width="100%" autoplay>
+									<source src="../static/Images/Hello Everyone!.mp4" type="video/mp4">
+									Your browser does not support the video tag.
+								</video>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6 px-0">
+				<div class="col-md-4 px-0">
 					<div class="detail-box">
 						<div class="heading_container ">
 							<h2>
@@ -201,7 +206,7 @@
 								<b>Login/Signup</b>
 							</h3>
 							<img src="../static/Images/scrn3.png" alt="Feature 1" class="featureImage"><br><br>
-							
+
 							<p>Securely log in or sign up to access personalized quizzes and track your progress.
 							</p>
 							<!--<a href="{{ url_for('dsnquiz.start_dsnquiz') }}">
@@ -219,7 +224,7 @@
 								<b>Start Quiz</b>
 							</h3>
 							<img src="../static/Images/scrn4.png" alt="Feature 1" class="featureImage"><br><br>
-							
+
 							<p>Participate in quizzes that cater to your interests and learning goals.
 							</p><br>
 							<!--<a href="{{ url_for('dsnquiz.start_dsnquiz') }}">
@@ -237,7 +242,7 @@
 								<b>Quiz Results</b>
 							</h3>
 							<img src="../static/Images/scrn5.png" alt="Feature 1" class="featureImage"><br>
-							
+
 							<p>Instant access to your quiz results, including scores and performance statistics.
 							</p><br>
 							<!--<a href="{{ url_for('dsnquiz.start_dsnquiz') }}">
