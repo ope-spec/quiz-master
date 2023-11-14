@@ -54,3 +54,5 @@ Welcome to Quiz Master - "Knowledge Unleashed, One Quiz Away." Quiz Master is a 
 
 ![Quiz Master Screenshot](static/Images/scrn4.png)
 ![Quiz Master Screenshot](static/Images/scrn5.png)
+![Quiz Master Screenshot](static/Images/scrn3.png)
+![Quiz Master Screenshot](static/Images/scrn2.png)
