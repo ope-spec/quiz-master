@@ -4,10 +4,10 @@
 
 Welcome to Quiz Master - "Knowledge Unleashed, One Quiz Away." Quiz Master is a dynamic platform that enables users to create, participate in, and manage quizzes, fostering interactive learning and information exchange.
 
-- **Author:** Opeyemi Ogunniyi
+- **Author:** Opeyemi Ogunniyi Adegboye
 - **LinkedIn:** [Opeyemi Ogunniyi's LinkedIn](https://www.linkedin.com/in/opeyemi-adegboye-58a35b1b4/)
 - **Deployed Site:** [Quiz Master](#link-to-your-deployed-site)
-- **Final Project Blog Article:** [Quiz Master Blog Article](#link-to-your-final-project-blog-article)
+- **Final Project Blog Article:** [Quiz Master Blog Article](https://medium.com/@opeyemiogunniyi230/quiz-master-transforming-learning-through-interactive-quizzes-ed1100400866)
 
 ## Technologies
 
