@@ -11,7 +11,7 @@ signup_bp = Blueprint('signup', __name__)
 def signup_route():
     username = request.form.get('username')
     email = request.form.get('email')
-    phone = request.form.get('phone')
+    #phone = request.form.get('phone')
     password = request.form.get('password')
 
     # Connect to the database
