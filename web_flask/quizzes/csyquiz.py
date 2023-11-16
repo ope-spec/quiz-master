@@ -43,7 +43,8 @@ def start_csyquiz():
                                question=question_data[1],
                                options=question_data[2:6])
 
-    return redirect(url_for('result.result', quiz='Cybersecurity'))
+    return redirect(url_for('result.result',
+                            quiz='Cybersecurity'))
 
 
 @csyquiz_bp.route('/submit_csyanswer', methods=['POST'])
@@ -67,7 +68,8 @@ def submit_csyanswer():
 
     total_questions = get_total_questions_csy()
     if current_question_id >= total_questions:
-        return redirect(url_for('result.result', quiz='Cybersecurity'))
+        return redirect(url_for('result.result',
+                                quiz='Cybersecurity'))
 
     next_question_data = fetch_from_db_csy(get_current_question_id_csy())
     return render_template('csyQuiz.html',

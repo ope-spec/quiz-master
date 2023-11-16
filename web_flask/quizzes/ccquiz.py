@@ -3,6 +3,7 @@ from flask import jsonify, session, redirect, url_for
 import mysql.connector
 from config import db_config
 
+
 ccquiz_bp = Blueprint('ccquiz', __name__)
 
 
@@ -42,7 +43,8 @@ def start_ccquiz():
                                question=question_data[1],
                                options=question_data[2:6])
 
-    return redirect(url_for('result.result', quiz='Cloud Computing'))
+    return redirect(url_for('result.result',
+                            quiz='Cloud Computing'))
 
 
 @ccquiz_bp.route('/submit_ccanswer', methods=['POST'])
@@ -66,7 +68,8 @@ def submit_ccanswer():
 
     total_questions = get_total_questions_cc()
     if current_question_id >= total_questions:
-        return redirect(url_for('result.result', quiz='Cloud Computing'))
+        return redirect(url_for('result.result',
+                                quiz='Cloud Computing'))
 
     next_question_data = fetch_from_db_cc(get_current_question_id_cc())
     return render_template('ccQuiz.html',

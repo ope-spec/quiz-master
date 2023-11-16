@@ -68,7 +68,8 @@ def submit_pmanswer():
 
     total_questions = get_total_questions_pm()
     if current_question_id >= total_questions:
-        return redirect(url_for('result.result', quiz='Project Management'))
+        return redirect(url_for('result.result',
+                                quiz='Project Management'))
 
     next_question_data = fetch_from_db_pm(get_current_question_id_pm())
     return render_template('pmQuiz.html',

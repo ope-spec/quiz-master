@@ -44,7 +44,7 @@ def start_dmquiz():
                                options=question_data[2:6])
 
     return redirect(url_for('result.result',
-                            quiz='Database Management Basics'))
+                            quiz='Database Management'))
 
 
 @dmquiz_bp.route('/submit_dmanswer', methods=['POST'])
@@ -69,7 +69,7 @@ def submit_dmanswer():
     total_questions = get_total_questions_dm()
     if current_question_id >= total_questions:
         return redirect(url_for('result.result',
-                                quiz='Database Management Basics'))
+                                quiz='Database Management'))
 
     next_question_data = fetch_from_db_dm(get_current_question_id_dm())
     return render_template('dmQuiz.html',

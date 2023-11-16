@@ -43,7 +43,8 @@ def start_wdquiz():
                                question=question_data[1],
                                options=question_data[2:6])
 
-    return redirect(url_for('result.result', quiz='Web Development'))
+    return redirect(url_for('result.result',
+                            quiz='Web Development'))
 
 
 @wdquiz_bp.route('/submit_wdanswer', methods=['POST'])
@@ -67,7 +68,8 @@ def submit_wdanswer():
 
     total_questions = get_total_questions_wd()
     if current_question_id >= total_questions:
-        return redirect(url_for('result.result', quiz='Web Development'))
+        return redirect(url_for('result.result',
+                                quiz='Web Development'))
 
     next_question_data = fetch_from_db_wd(get_current_question_id_wd())
     return render_template('wdQuiz.html',
